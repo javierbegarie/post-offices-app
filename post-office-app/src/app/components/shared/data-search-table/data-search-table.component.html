@@ -1,0 +1,19 @@
+<mat-form-field *ngIf="showFilterInput">
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{filterPlaceholder}}">
+</mat-form-field>
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+  
+        <ng-container *ngFor="let column of columns" matColumnDef="{{column.name}}">
+          <th mat-header-cell *matHeaderCellDef> {{column.header}} </th>
+          <td mat-cell *matCellDef="let item">
+            {{column.titleCase ? (item[column.property] | titlecase) : item[column.property]}}
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
