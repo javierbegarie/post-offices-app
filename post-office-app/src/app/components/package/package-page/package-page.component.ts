@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DataSearchTableConfig, DataSearchTablePipe } from '../../shared/data-search-table/data-search-table.component';
+import Shipment from '../../../model/shipment';
+import { ShipmentService } from '../../../services/shipment.service';
 
 @Component({
   selector: 'app-package-page',
@@ -7,7 +10,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PackagePageComponent implements OnInit {
 
-  constructor() { }
+  packagesTableConfig: DataSearchTableConfig<Shipment>
+
+  constructor(private _shipmentService:ShipmentService) { 
+
+    this.packagesTableConfig = {
+      columns: [
+        {
+          name: 'id',
+          header: 'Id',
+          property: 'id',
+          pipe: DataSearchTablePipe.PRE_ELLIPSIS
+        },
+        {
+          name: 'status',
+          header: 'Status',
+          property: 'status',
+          pipe: DataSearchTablePipe.TITLE_CASE
+        },
+        {
+          name: 'weight',
+          header: 'Weight',
+          property: 'weight'
+        },
+        {
+          name: 'weightCategory',
+          header: 'Category',
+          property: 'weightCategory',
+          hidden: true
+        },
+        {
+          name: 'office',
+          header: 'Office',
+          property: 'office',
+          pipe: DataSearchTablePipe.FLATTEN
+        }
+      ],
+      dataStream: this._shipmentService.getPackages
+    }
+
+  }
 
   ngOnInit() {
   }

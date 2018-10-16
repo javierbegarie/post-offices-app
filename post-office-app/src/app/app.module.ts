@@ -8,13 +8,27 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { DataSearchTableComponent } from './components/shared/data-search-table/data-search-table.component';
+import { EllipsisPipe } from './pipes/ellipsis.pipe';
+import { PipeSwitchPipe } from './pipes/pipe-switch.pipe';
+import { FlattenPipe } from './pipes/flatten.pipe';
+import { OfficeListComponent } from './components/office/office-list/office-list.component';
+import { OfficeFormComponent } from './components/office/office-form/office-form.component';
+import { ShipmentListComponent } from './components/shipment/shipment-list/shipment-list.component';
+import { ShipmentFormComponent } from './components/shipment/shipment-form/shipment-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     RoutingComponents,
-    DataSearchTableComponent
+    DataSearchTableComponent,
+    EllipsisPipe,
+    PipeSwitchPipe,
+    FlattenPipe,
+    OfficeListComponent,
+    OfficeFormComponent,
+    ShipmentListComponent,
+    ShipmentFormComponent
   ],
   imports: [
     BrowserModule,

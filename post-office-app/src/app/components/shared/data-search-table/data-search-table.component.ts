@@ -22,12 +22,36 @@ export class DataSearchTableComponent<T> implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+    /* Total data columns */ 
     this.columns = this.config.columns;
-    this.displayedColumns = this.columns.map(c=>c.name);
+
+    /* UI displayed columns only */
+    this.displayedColumns = this.columns.filter(c=>!c.hidden).map(c=>c.name);
+
+    /* binding paginator */
+    this.dataSource.paginator = this.paginator;
+
+    this.dataSource.filterPredicate = this.filterPredicate;
+
+    /* fetching data */
     this.config.dataStream().subscribe(data=>{
-      console.log(data);
       this.dataSource.data = data;
     });
+  }
+
+  /* Supports for non primitive values filtering */
+  filterPredicate = (data: T, filter: string) =>{
+      let isObject = p => (p && typeof p === 'object');
+      let includes = (p,f)=>p.toString().toLowerCase().includes(f);
+      let checkObj = obj => {
+        let res = Object.values(obj).some(p=>(!isObject(p) && includes(p,filter)));
+        console.log(res,obj);
+        return res;
+      };
+      let objs = Object.values(data).filter(isObject);
+      
+      return objs.concat([data]).some(checkObj);
   }
 
   applyFilter(filterValue: string) {
@@ -43,10 +67,18 @@ export interface DataSeachColumnInterface{
   name:string;
   header:string;
   property:string;
-  titleCase?:boolean;
+  pipe?:DataSearchTablePipe;
+  hidden?:boolean;
 }
 
 export interface DataSearchTableConfig<T>{
   columns:DataSeachColumnInterface[];
   dataStream: ()=>Observable<T[]>
+}
+
+export enum DataSearchTablePipe{
+  TITLE_CASE = 'titlecase',
+  PRE_ELLIPSIS = 'pre-ellipsis',
+  POST_ELLIPSIS = 'post-ellipsis',
+  FLATTEN = 'flatten'
 }

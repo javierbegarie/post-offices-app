@@ -1,4 +1,5 @@
 const uuidv4 = require('uuid/v4');
+const offices = require('./offices');
 
 const shipmentTypes = [
     {id: 0, name: 'letter'},
@@ -17,36 +18,42 @@ const weights = [
     {id: 2, name:'heavy',desc: 'More than 5kg'}
 ];
 
-const offices = [
-    {
-        id: uuidv4(),
-        PLZ: 80686,
-        name: 'Laim',
-    },
-    {
-        id: uuidv4(),
-        PLZ: 80335,
-        name: 'Schwanthalerhöhe',
-    },
-];
+const shipmentCreator = (type,status,weight,office)=>({
+    id: uuidv4(),
+    type: type.name,
+    status: status.name,
+    weight: weight.desc,
+    weightCategory: weight.name,
+    office: office
+});
 
+const randomFactory = (array) => () => { 
+    let i = Math.floor(Math.random() * array.length);
+    return array[i];
+}
 
-const shipments = [
-    {
-        id: uuidv4(),
-        type: shipmentTypes[1].name,
-        status: shipmentStatus[0].name,
-        weight: weights[2].desc,
-        office: offices[0]
-    },
-    {
-        id: uuidv4(),
-        type: shipmentTypes[0].name,
-        status: shipmentStatus[1].name,
-        weight: weights[0].desc,
-        office: offices[1]
-    },
-];
+const getShipmentType = randomFactory(shipmentTypes);
+const getShipmentStatus = randomFactory(shipmentStatus);
+const getOffice = randomFactory(offices);
+const getShipmentWeight = randomFactory(weights);
+
+let shipmentsCuantity = 120;
+
+const shipments = [];
+let auxType = '';
+let auxWeight = null;
+for(let i=0;i<shipmentsCuantity;i++){
+    auxType = getShipmentType();
+    auxWeight = auxType.name === 'letter'? weights[0] : getShipmentWeight();
+    shipments.push( 
+        shipmentCreator(
+            auxType,
+            getShipmentStatus(),
+            auxWeight,
+            getOffice()
+        ) 
+    )
+}
 
 module.exports = {
     shipmentTypes,
