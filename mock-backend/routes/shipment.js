@@ -71,7 +71,7 @@ function deleteShipment(shipment) {
 }
 
 function getType(selection) {
-    const type = db.types.filter(type => type.id === selection);
+    const type = db.types.filter(type => type.name === selection);
     if (type.length === 0) {
         const err = new Error('Wrong type');
         err.status = 500;
@@ -82,7 +82,7 @@ function getType(selection) {
 }
 
 function getWeight(selection) {
-    const weight = db.weights.filter(weight => weight.id === selection);
+    const weight = db.weights.filter(weight => weight.name === selection);
     if (weight.length === 0) {
         const err = new Error('Wrong weight type');
         err.status = 500;

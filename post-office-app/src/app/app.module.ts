@@ -15,6 +15,7 @@ import { OfficeListComponent } from './components/office/office-list/office-list
 import { OfficeFormComponent } from './components/office/office-form/office-form.component';
 import { ShipmentListComponent } from './components/shipment/shipment-list/shipment-list.component';
 import { ShipmentFormComponent } from './components/shipment/shipment-form/shipment-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ShipmentFormComponent } from './components/shipment/shipment-form/shipm
     BrowserAnimationsModule,
     MaterialComponentsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
