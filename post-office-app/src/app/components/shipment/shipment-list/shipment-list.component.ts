@@ -33,6 +33,18 @@ export class ShipmentListComponent implements OnInit {
           property: 'weightDesc'
         }
       ],
+      actionColumns:[
+        {
+          name:'Edit',
+          header: 'Edit',
+          onclick: (coso)=>{ console.log(coso) }
+        },
+        {
+          name:'Delete',
+          header: 'Delete',
+          onclick: (coso)=>{ console.log(coso) }
+        }
+      ],
       dataStream: this._shipmentService.getShipments
     }
   }

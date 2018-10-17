@@ -5,7 +5,7 @@ const uuidv4 = require('uuid/v4');
 
 
 router.get('/list', function(req, res) {
-    response(res,db.shipments);
+    res.send(db.shipments);
 });
 
 router.post('/add', function(req, res) {

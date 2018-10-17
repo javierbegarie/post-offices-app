@@ -50,10 +50,8 @@ export class DataSearchTableComponent<T> implements OnInit {
   filterPredicate = (data: T, filter: string) =>{
       let isObject = p => (p && typeof p === 'object');
       let includes = (p,f)=>p.toString().toLowerCase().includes(f);
-      let checkObj = obj => {
-        let res = Object.values(obj).some(p=>(!isObject(p) && includes(p,filter)));
-        return res;
-      };
+      let checkObj = obj => Object.values(obj).some(p=>(!isObject(p) && includes(p,filter)));
+ 
       let objs = Object.values(data).filter(isObject);
       
       return objs.concat([data]).some(checkObj);
@@ -67,7 +65,7 @@ export class DataSearchTableComponent<T> implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  
+
   refreshList(){
     this.loadData();
   }
