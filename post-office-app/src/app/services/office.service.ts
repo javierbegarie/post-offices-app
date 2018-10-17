@@ -14,15 +14,24 @@ export class OfficeService {
     return this._http.get<Office[]>(`${this.baseUrl}/office/list`);
   }
 
+  public getOffice = (id)=>{
+    return this._http.post(`${this.baseUrl}/office/get`,{id});
+  }
+
   public postOffice = (PLZ,name) => {
     return this._http.post(`${this.baseUrl}/office/add`,{PLZ,name});
   }
 
   public updateOffice = (office:Office) => {
-    return this._http.post(`${this.baseUrl}/office/update`,office);
+    let payload = {
+      id: office.id,
+      name: office.name,
+      PLZ: office.PLZ
+    }
+    return this._http.post(`${this.baseUrl}/office/update`,payload);
   }
 
   public deleteOffice = (office:Office) => {
-    return this._http.post(`${this.baseUrl}/office/delte`,office);
+    return this._http.post(`${this.baseUrl}/office/delete`,{id:office.id});
   }
 }

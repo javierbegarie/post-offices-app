@@ -2,14 +2,6 @@ const uuidv4 = require('uuid/v4');
 const offices = [
     {
         id: uuidv4(),
-        PLZ: 80688,
-        name: 'Laim',
-    },{
-        id: uuidv4(),
-        PLZ: 80332,
-        name: 'Schwanthalerhöhe'
-    },{
-        id: uuidv4(),
         PLZ: 80995,
         name: 'Allach-Untermenzing'
     },{

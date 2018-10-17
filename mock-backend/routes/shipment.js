@@ -5,7 +5,7 @@ const uuidv4 = require('uuid/v4');
 
 
 router.get('/list', function(req, res) {
-    res.send(db.shipments);
+    response(res,db.shipments);
 });
 
 router.post('/add', function(req, res) {
@@ -25,7 +25,7 @@ router.post('/add', function(req, res) {
         office,
     };
     addToList(newShipment);
-    res.send(JSON.stringify({message:'Shipment added successfully'}));
+    response(res,'Shipment added successfully');
 });
 
 router.post('/update', function(req, res) {
@@ -33,14 +33,14 @@ router.post('/update', function(req, res) {
     const updatedShipment = req.body;
     const shipment = getShipment(id);
     const updatedId = updateStatus(shipment, updatedShipment);
-    res.send(updatedId + ' updated successfully');
+    response(res,updatedId + ' updated successfully');
 });
 
 router.post('/delete', function(req, res) {
     const id = req.body.id;
     const shipment = getShipment(id);
     const deletedId = deleteShipment(shipment);
-    res.send(deletedId + ' deleted successfully');
+    response(res,deletedId + ' deleted successfully');
 });
 
 router.post('/get', function(req, res) {
@@ -118,6 +118,10 @@ function getStatus(selection) {
 
 function addToList(shipment) {
     db.shipments.push(shipment);
+}
+
+function response(res, message){
+    res.send(JSON.stringify({message}));
 }
 
 module.exports = router;

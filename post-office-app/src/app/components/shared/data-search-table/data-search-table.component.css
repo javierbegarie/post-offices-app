@@ -5,3 +5,12 @@ table{
 mat-form-field{
     width:100%;
 }
+
+a:not([href]) {
+    text-decoration: none;
+}
+
+a:not([href]):hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

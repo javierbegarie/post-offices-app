@@ -11,33 +11,39 @@ export class DataSearchTableComponent<T> implements OnInit {
 
   @Input() config: DataSearchTableConfig<T>;
   @Input('showFilter') showFilterInput: boolean = true;
+  /* In case another component needs to change the filter placeholder */
   @Input('placeholder') filterPlaceholder: string = 'Search';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  /* Utility object for paginating and filtering data */
   public dataSource = new MatTableDataSource<T>();
   public displayedColumns = [];
-  public columns = [];
+  public dataColumns = [];
+  public actionColumns = [];
 
   constructor() { }
 
   ngOnInit() {
 
     /* Total data columns */ 
-    this.columns = this.config.columns;
+    this.dataColumns = this.config.dataColumns;
+
+    /* Total action columns */ 
+    this.actionColumns = this.config.actionColumns || [];
 
     /* UI displayed columns only */
-    this.displayedColumns = this.columns.filter(c=>!c.hidden).map(c=>c.name);
+    this.displayedColumns = [...this.dataColumns.filter(c=>!c.hidden).map(c=>c.name),
+                             ...this.actionColumns.map(c=>c.name)]
 
     /* binding paginator */
     this.dataSource.paginator = this.paginator;
 
+    /* Changing default filter criteria */
     this.dataSource.filterPredicate = this.filterPredicate;
 
     /* fetching data */
-    this.config.dataStream().subscribe(data=>{
-      this.dataSource.data = data;
-    });
+    this.loadData();
   }
 
   /* Supports for non primitive values filtering */
@@ -46,7 +52,6 @@ export class DataSearchTableComponent<T> implements OnInit {
       let includes = (p,f)=>p.toString().toLowerCase().includes(f);
       let checkObj = obj => {
         let res = Object.values(obj).some(p=>(!isObject(p) && includes(p,filter)));
-        console.log(res,obj);
         return res;
       };
       let objs = Object.values(data).filter(isObject);
@@ -57,13 +62,23 @@ export class DataSearchTableComponent<T> implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    /* Reset paginator every time filter changes */
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
+  
+  refreshList(){
+    this.loadData();
+  }
 
+  private loadData = () =>{
+    this.config.dataStream().subscribe(data=>{
+      this.dataSource.data = data;
+    });
+  }
 }
-export interface DataSeachColumnInterface{
+export interface DataSearchColumnInterface{
   name:string;
   header:string;
   property:string;
@@ -71,8 +86,15 @@ export interface DataSeachColumnInterface{
   hidden?:boolean;
 }
 
+export interface ActionColumnInterface<T>{
+  name:string;
+  header:string;
+  onclick: (data:T)=>void;
+}
+
 export interface DataSearchTableConfig<T>{
-  columns:DataSeachColumnInterface[];
+  dataColumns:DataSearchColumnInterface[];
+  actionColumns?: ActionColumnInterface<T>[];
   dataStream: ()=>Observable<T[]>
 }
 

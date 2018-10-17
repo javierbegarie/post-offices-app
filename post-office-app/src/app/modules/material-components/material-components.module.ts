@@ -13,7 +13,8 @@ import {
   MatPaginatorModule,
   MatInputModule,
   MatSelectModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatDialogModule
 } from '@angular/material';
 
 let modules = [
@@ -28,7 +29,8 @@ let modules = [
   MatPaginatorModule,
   MatInputModule,
   MatSelectModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatDialogModule
 ];
 
 @NgModule({

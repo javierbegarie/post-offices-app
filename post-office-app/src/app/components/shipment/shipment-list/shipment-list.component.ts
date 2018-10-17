@@ -14,7 +14,7 @@ export class ShipmentListComponent implements OnInit {
   constructor(private _shipmentService:ShipmentService) {
 
     this.shipmentsTableConfig = {
-      columns: [
+      dataColumns: [
         {
           name: 'type',
           header: 'Shipment Type',

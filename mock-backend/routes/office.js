@@ -16,7 +16,7 @@ router.post('/add', function(req, res) {
         name: request.name,
     };
     addToList(newOffice);
-    res.send(JSON.stringify({message:'Office added successfully'}));
+    response(res,'Office added successfully');
 });
 
 router.post('/update', function(req, res) {
@@ -25,14 +25,14 @@ router.post('/update', function(req, res) {
     const office = getOffice(id);
     console.log(office);
     const updatedId = updateOffice(office, updatedOffice);
-    res.send(updatedId + ' updated successfully');
+    response(res,updatedId + ' updated successfully');
 });
 
 router.post('/delete', function(req, res) {
     const id = req.body.id;
     const office = getOffice(id);
     const deletedId = deleteOffice(office);
-    res.send(deletedId + ' deleted successfully');
+    response(res,deletedId + ' deleted successfully');
 });
 
 router.post('/get', function(req, res) {
@@ -66,6 +66,10 @@ function getOffice(selection) {
 
 function addToList(shipment) {
     db.offices.push(shipment);
+}
+
+function response(res, message){
+    res.send(JSON.stringify({message}));
 }
 
 module.exports = router;

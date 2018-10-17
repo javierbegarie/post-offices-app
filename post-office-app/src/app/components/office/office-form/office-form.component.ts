@@ -3,6 +3,8 @@ import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { OfficeService } from '../../../services/office.service';
 import { MatSnackBar } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
+import Office from 'src/app/model/office';
 
 @Component({
   selector: 'app-office-form',
@@ -23,22 +25,53 @@ export class OfficeFormComponent implements OnInit {
       Validators.pattern('[a-zA-Z ]*')]
     ]
   });
+
+  isNew = true;
+  office:Office = null;
+
   constructor(
     private _fb: FormBuilder, 
     private _officeService: OfficeService,
-    private _snackBar: MatSnackBar) {
+    private _snackBar: MatSnackBar,
+    private _route:ActivatedRoute) {
 
   }
 
   ngOnInit() {
+    let id = this._route.snapshot.paramMap.get('id');
+    if(id){
+      this._officeService.getOffice(id).subscribe(office=>{
+        this.isNew = false;
+        this.office= <Office> office;
+        this.officeForm.get('PLZ').setValue(this.office.PLZ);
+        this.officeForm.get('name').setValue(this.office.name);
+      });
+    }
   }
 
   onSubmit() {
+    if(this.isNew){
+      this.createOffice();
+    }else{
+      this.updateOffice();
+    }
+  }
+
+  createOffice(){
     let office = this.officeForm.value;
     this._officeService.postOffice(office.PLZ,office.name)
     .subscribe(()=>{
       this._snackBar.open(`Office ${office.name} created successfully`, null ,{duration: 1000});
       this.officeForm.reset();
+    });
+  }
+
+  updateOffice(){
+    let value = this.officeForm.value;
+    let office = new Office(this.office.id,value.name,value.PLZ);
+    this._officeService.updateOffice(office)
+    .subscribe(()=>{
+      this._snackBar.open(`Office ${office.name} updated successfully`, null ,{duration: 1000});
     });
   }
 }

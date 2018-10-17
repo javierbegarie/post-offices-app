@@ -15,7 +15,7 @@ export class PackagePageComponent implements OnInit {
   constructor(private _shipmentService:ShipmentService) { 
 
     this.packagesTableConfig = {
-      columns: [
+      dataColumns: [
         {
           name: 'id',
           header: 'Id',

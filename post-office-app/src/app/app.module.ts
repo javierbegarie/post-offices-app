@@ -16,6 +16,7 @@ import { OfficeFormComponent } from './components/office/office-form/office-form
 import { ShipmentListComponent } from './components/shipment/shipment-list/shipment-list.component';
 import { ShipmentFormComponent } from './components/shipment/shipment-form/shipment-form.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { DeleteConfirmDialogComponent } from './components/shared/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     OfficeListComponent,
     OfficeFormComponent,
     ShipmentListComponent,
-    ShipmentFormComponent
+    ShipmentFormComponent,
+    DeleteConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule
+  ],
+  entryComponents:[
+    DeleteConfirmDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
