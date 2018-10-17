@@ -10,20 +10,22 @@ router.get('/list', function(req, res) {
 
 router.post('/add', function(req, res) {
     const request = req.body;
-    const type = getType(request.type);
-    const weight = getWeight(request.weight);
+    const type = getType(request.type).name;
+    const auxWeight = getWeight(request.weight);
+    const weight = auxWeight.name;
+    const weightDesc = auxWeight.desc;
     const office = getOffice(request.office);
+    const status = getStatus(request.status).name;
     const newShipment = {
         id: uuidv4(),
         type,
-        origin: request.origin,
-        destination: request.destination,
-        delivered: request.delivered,
+        status,
         weight,
+        weightDesc,
         office,
     };
     addToList(newShipment);
-    res.send('Shipment added successfully');
+    res.send(JSON.stringify({message:'Shipment added successfully'}));
 });
 
 router.post('/update', function(req, res) {
@@ -71,7 +73,7 @@ function deleteShipment(shipment) {
 }
 
 function getType(selection) {
-    const type = db.types.filter(type => type.name === selection);
+    const type = db.shipmentTypes.filter(type => type.name === selection);
     if (type.length === 0) {
         const err = new Error('Wrong type');
         err.status = 500;
@@ -93,13 +95,24 @@ function getWeight(selection) {
 }
 
 function getOffice(selection) {
-    const office = db.offices.filter(office => office.id === selection);
+    const office = db.offices.filter(office => office.id === selection.id);
     if (office.length === 0) {
-        const err = new Error('Wrong office type');
+        const err = new Error('Wrong office');
         err.status = 500;
         throw err;
     } else {
         return office[0];
+    }
+}
+
+function getStatus(selection) {
+    const status = db.shipmentStatus.filter(status => status.name === selection);
+    if (status.length === 0) {
+        const err = new Error('Wrong status');
+        err.status = 500;
+        throw err;
+    } else {
+        return status[0];
     }
 }
 

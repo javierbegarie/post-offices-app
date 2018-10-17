@@ -16,7 +16,7 @@ router.post('/add', function(req, res) {
         name: request.name,
     };
     addToList(newOffice);
-    res.send('Office added successfully');
+    res.send(JSON.stringify({message:'Office added successfully'}));
 });
 
 router.post('/update', function(req, res) {

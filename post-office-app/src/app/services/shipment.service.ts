@@ -20,4 +20,16 @@ export class ShipmentService {
   public getShipments = ()=>{
     return this._http.get<Shipment[]>(`${this.baseUrl}/shipment/list`);
   };
+
+  public postShipment = (type,status,weight,office) => {
+    return this._http.post(`${this.baseUrl}/shipment/add`,{type,status,weight,office});
+  }
+
+  public updateShipment = (shipment:Shipment) => {
+    return this._http.post(`${this.baseUrl}/shipment/update`,shipment);
+  }
+
+  public deleteShipment = (shipment:Shipment) => {
+    return this._http.post(`${this.baseUrl}/shipment/delte`,shipment);
+  }
 }

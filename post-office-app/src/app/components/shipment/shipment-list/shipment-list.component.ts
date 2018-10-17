@@ -28,9 +28,9 @@ export class ShipmentListComponent implements OnInit {
           pipe: DataSearchTablePipe.TITLE_CASE
         },
         {
-          name: 'weight',
+          name: 'weightDesc',
           header: 'Weight',
-          property: 'weight'
+          property: 'weightDesc'
         }
       ],
       dataStream: this._shipmentService.getShipments

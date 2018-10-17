@@ -29,14 +29,14 @@ export class PackagePageComponent implements OnInit {
           pipe: DataSearchTablePipe.TITLE_CASE
         },
         {
-          name: 'weight',
+          name: 'weightDesc',
           header: 'Weight',
-          property: 'weight'
+          property: 'weightDesc'
         },
         {
-          name: 'weightCategory',
+          name: 'weight',
           header: 'Category',
-          property: 'weightCategory',
+          property: 'weight',
           hidden: true
         },
         {

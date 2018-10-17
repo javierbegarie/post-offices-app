@@ -22,8 +22,8 @@ const shipmentCreator = (type,status,weight,office)=>({
     id: uuidv4(),
     type: type.name,
     status: status.name,
-    weight: weight.desc,
-    weightCategory: weight.name,
+    weightDesc: weight.desc,
+    weight: weight.name,
     office: office
 });
 
@@ -37,7 +37,7 @@ const getShipmentStatus = randomFactory(shipmentStatus);
 const getOffice = randomFactory(offices);
 const getShipmentWeight = randomFactory(weights);
 
-let shipmentsCuantity = 120;
+let shipmentsCuantity = 10;
 
 const shipments = [];
 let auxType = '';

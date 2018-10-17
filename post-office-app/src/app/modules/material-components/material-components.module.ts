@@ -11,7 +11,9 @@ import {
   MatTableModule,
   MatFormFieldModule,
   MatPaginatorModule,
-  MatInputModule
+  MatInputModule,
+  MatSelectModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 let modules = [
@@ -24,7 +26,9 @@ let modules = [
   MatTableModule,
   MatFormFieldModule,
   MatPaginatorModule,
-  MatInputModule
+  MatInputModule,
+  MatSelectModule,
+  MatSnackBarModule
 ];
 
 @NgModule({

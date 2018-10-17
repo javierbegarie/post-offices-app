@@ -1,3 +1,38 @@
-<p>
-  shipment-form works!
-</p>
+<mat-card class="app-form-container">
+    <h3>New Shipment</h3>
+    <form class="app-form" [formGroup]="shipmentForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <mat-select placeholder="Type" formControlName="type">
+              <mat-option *ngFor="let type of types" [value]="type">
+                {{type | titlecase}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+      
+        <mat-form-field>
+            <mat-select placeholder="Weight" formControlName="weight">
+                <mat-option *ngFor="let weight of weights" [value]="weight">
+                  {{weight | titlecase}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Status" formControlName="status">
+                <mat-option *ngFor="let status of statuses"  [value]="status">
+                  {{status | titlecase }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select [disabled]="!offices.length" placeholder="Office" formControlName="office">
+                <mat-option *ngFor="let office of offices" [value]="office">
+                  {{office.name}} - {{office.PLZ}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="!shipmentForm.valid">Submit</button>
+    </form>
+</mat-card>
