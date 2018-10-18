@@ -1,5 +1,7 @@
 <mat-card class="app-form-container">
-    <h3>New Post Office</h3>
+    <h3 *ngIf="isNew">New Post Office</h3>
+    <h3 *ngIf="!isNew">Edit Post Office</h3>
+
     <form class="app-form" [formGroup]="officeForm" (ngSubmit)="onSubmit()">
         <mat-form-field>
           <input matInput placeholder="Postal Code" formControlName="PLZ">

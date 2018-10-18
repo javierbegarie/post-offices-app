@@ -1,5 +1,7 @@
 <mat-card class="app-form-container">
-    <h3>New Shipment</h3>
+    <h3 *ngIf="isNew">New Shipment</h3>
+    <h3 *ngIf="!isNew">Edit Shipment</h3>
+
     <form class="app-form" [formGroup]="shipmentForm" (ngSubmit)="onSubmit()">
         <mat-form-field>
           <mat-select placeholder="Type" formControlName="type">
@@ -27,7 +29,7 @@
 
         <mat-form-field>
             <mat-select [disabled]="!offices.length" placeholder="Office" formControlName="office">
-                <mat-option *ngFor="let office of offices" [value]="office">
+                <mat-option *ngFor="let office of offices" [value]="office.id">
                   {{office.name}} - {{office.PLZ}}
                 </mat-option>
             </mat-select>

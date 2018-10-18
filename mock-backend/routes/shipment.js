@@ -31,6 +31,8 @@ router.post('/add', function(req, res) {
 router.post('/update', function(req, res) {
     const id = req.body.id;
     const updatedShipment = req.body;
+    /* Setting weight description according weight category */
+    updatedShipment.weightDesc = getWeight(updatedShipment.weight).desc;
     const shipment = getShipment(id);
     const updatedId = updateStatus(shipment, updatedShipment);
     response(res,updatedId + ' updated successfully');

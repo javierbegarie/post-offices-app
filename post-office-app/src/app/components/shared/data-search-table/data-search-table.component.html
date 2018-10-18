@@ -1,7 +1,7 @@
 <mat-form-field *ngIf="showFilterInput">
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{filterPlaceholder}}">
 </mat-form-field>
-<div class="mat-elevation-z3">
+<div class="mat-elevation-z3" >
     <table mat-table [dataSource]="dataSource">
   
         <ng-container *ngFor="let data of dataColumns" matColumnDef="{{data.name}}">
@@ -20,5 +20,11 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     
     </table>
+
+    <div *ngIf="!results" class="no-results">
+        No results were found
+    </div>
+    <mat-divider></mat-divider>
     <mat-paginator [pageSizeOptions]="[5, 10]"></mat-paginator>
 </div>
+

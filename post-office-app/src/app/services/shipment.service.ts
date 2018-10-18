@@ -17,6 +17,10 @@ export class ShipmentService {
           .pipe( map((shipments)=>shipments.filter(s=>s.type===ShipmentType.PACKAGE)));
   };
 
+  public getShipment = (id)=>{
+    return this._http.post(`${this.baseUrl}/shipment/get`,{id});
+  }
+
   public getShipments = ()=>{
     return this._http.get<Shipment[]>(`${this.baseUrl}/shipment/list`);
   };
@@ -26,10 +30,21 @@ export class ShipmentService {
   }
 
   public updateShipment = (shipment:Shipment) => {
-    return this._http.post(`${this.baseUrl}/shipment/update`,shipment);
+    let payload = {
+      id: shipment.id,
+      type: shipment.type,
+      status: shipment.status,
+      weight: shipment.weight,
+      office: {
+        id: shipment.office.id,
+        PLZ: shipment.office.PLZ,
+        name: shipment.office.name
+      }
+    };
+    return this._http.post(`${this.baseUrl}/shipment/update`,payload);
   }
 
   public deleteShipment = (shipment:Shipment) => {
-    return this._http.post(`${this.baseUrl}/shipment/delte`,shipment);
+    return this._http.post(`${this.baseUrl}/shipment/delete`,{id:shipment.id});
   }
 }

@@ -14,3 +14,10 @@ a:not([href]):hover {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.no-results{
+    font-size: 18px;
+    text-align: center;
+    margin: 10px 0px;
+    font-weight: 300;
+}

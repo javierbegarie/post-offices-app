@@ -18,7 +18,6 @@ export class OfficeListComponent implements OnInit {
   constructor(
     private _officeService: OfficeService,  
     private _router: Router,
-    private _app: ApplicationRef,
     public dialog: MatDialog) { 
 
     this.officesTableConfig = {
@@ -56,12 +55,15 @@ export class OfficeListComponent implements OnInit {
   }
 
   deleteOffice = (office:Office)=>{
-    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent,{
+    const dialogConfig = {
       width: '350px',
       data: {header:'Office',text: `${office.name} - ${office.PLZ}`}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result === true) {
+    };
+
+    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent,dialogConfig);
+    
+    dialogRef.afterClosed().subscribe(confirm => {
+      if(confirm === true) {
         this._officeService.deleteOffice(office).subscribe(()=>{
             this.dataTable.refreshList();
         });

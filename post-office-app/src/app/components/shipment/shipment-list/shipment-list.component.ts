@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { DataSearchTableConfig, DataSearchTablePipe } from '../../shared/data-search-table/data-search-table.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DataSearchTableConfig, DataSearchTablePipe, DataSearchTableComponent } from '../../shared/data-search-table/data-search-table.component';
 import Shipment from '../../../model/shipment';
 import { ShipmentService } from '../../../services/shipment.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { DeleteConfirmDialogComponent } from '../../shared/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
   selector: 'app-shipment-list',
@@ -11,7 +14,12 @@ import { ShipmentService } from '../../../services/shipment.service';
 export class ShipmentListComponent implements OnInit {
 
   shipmentsTableConfig: DataSearchTableConfig<Shipment>;
-  constructor(private _shipmentService:ShipmentService) {
+  @ViewChild(DataSearchTableComponent) dataTable: DataSearchTableComponent<Shipment>;
+
+  constructor(
+    private _shipmentService:ShipmentService,
+    private _router: Router,
+    public dialog: MatDialog) {
 
     this.shipmentsTableConfig = {
       dataColumns: [
@@ -31,24 +39,52 @@ export class ShipmentListComponent implements OnInit {
           name: 'weightDesc',
           header: 'Weight',
           property: 'weightDesc'
+        },
+        {
+          name: 'office',
+          header: 'Office',
+          property: 'office',
+          pipe: DataSearchTablePipe.FLATTEN
         }
       ],
       actionColumns:[
         {
           name:'Edit',
           header: 'Edit',
-          onclick: (coso)=>{ console.log(coso) }
+          onclick: this.editShipment
         },
         {
           name:'Delete',
           header: 'Delete',
-          onclick: (coso)=>{ console.log(coso) }
+          onclick: this.deleteShipment
         }
       ],
       dataStream: this._shipmentService.getShipments
     }
   }
   
+  editShipment = (shipment:Shipment)=>{
+    this._router.navigate([`shipments/update/${shipment.id}`]);
+  }
+
+  deleteShipment = (shipment:Shipment)=>{
+
+    const dialogConfig = {
+      width: '350px',
+      data: {header:'Shipment',text: ` this shipment `}
+    };
+
+    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent,dialogConfig);
+    
+    dialogRef.afterClosed().subscribe(confirm => {
+      if(confirm === true) {
+        this._shipmentService.deleteShipment(shipment).subscribe(()=>{
+            this.dataTable.refreshList();
+        });
+      }
+    });
+  }
+
   ngOnInit() {
 
   }

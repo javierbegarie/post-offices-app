@@ -17,9 +17,9 @@ class Shipment{
         private _weightDesc: string,
         private _office: Office
     ){
-        this._type = ShipmentType[type];
-        this._status = ShipmentStatus[status];
-        this.weight = ShipmentWeight[weight];
+        this._type = ShipmentType[type.toUpperCase()];
+        this._status = ShipmentStatus[status.toUpperCase()];
+        this.weight = ShipmentWeight[weight.toUpperCase()];
     }
 
 	public get type(): ShipmentType  {

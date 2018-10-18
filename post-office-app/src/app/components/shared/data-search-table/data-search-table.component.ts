@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, DoCheck } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 
@@ -21,6 +21,7 @@ export class DataSearchTableComponent<T> implements OnInit {
   public displayedColumns = [];
   public dataColumns = [];
   public actionColumns = [];
+  public results = true;
 
   constructor() { }
 
@@ -64,6 +65,12 @@ export class DataSearchTableComponent<T> implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+
+    if (filterValue && this.dataSource.filteredData.length === 0){
+      this.results = false;
+      return true;
+    }
+    this.results = true;
   }
 
   refreshList(){
@@ -73,6 +80,7 @@ export class DataSearchTableComponent<T> implements OnInit {
   private loadData = () =>{
     this.config.dataStream().subscribe(data=>{
       this.dataSource.data = data;
+      if(data.length === 0) this.results = false;
     });
   }
 }
