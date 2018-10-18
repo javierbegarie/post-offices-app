@@ -3,26 +3,9 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', sans-serif; }
 
-
-.offices_list {
-    display: grid;
-    grid-template: auto / 50% 50%;
-    grid-column-gap: 20px;
-}
-.offices_list_right_side{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: stretch;
-}
-
 button[mat-raised-button]{
-    margin-top: 6px;
-    margin-bottom:23px;
-}
-
-.offices_list_right_side mat-card{
-    flex-grow: 1;
+    margin-top: 5px;
+    margin-bottom:10px;
 }
 
 .app-form-container{
