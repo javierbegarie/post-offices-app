@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
+/**
+ * Wrapping all used Angular Material modules
+ */
 
 import {
   MatCardModule,

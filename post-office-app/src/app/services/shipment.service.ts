@@ -30,6 +30,9 @@ export class ShipmentService {
   }
 
   public updateShipment = (shipment:Shipment) => {
+    /* HttpClient sends private attributes (_name) instead of accesors (name).
+       Using payload as an easy fix.
+    */
     let payload = {
       id: shipment.id,
       type: shipment.type,

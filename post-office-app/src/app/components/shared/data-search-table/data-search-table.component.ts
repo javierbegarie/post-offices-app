@@ -30,7 +30,7 @@ export class DataSearchTableComponent<T> implements OnInit {
     /* Total data columns */ 
     this.dataColumns = this.config.dataColumns;
 
-    /* Total action columns */ 
+    /* Total action columns (for edit and delete) */ 
     this.actionColumns = this.config.actionColumns || [];
 
     /* UI displayed columns only */
@@ -66,6 +66,7 @@ export class DataSearchTableComponent<T> implements OnInit {
       this.dataSource.paginator.firstPage();
     }
 
+    /* Show "No results" message in case there is no filtered data */
     if (filterValue && this.dataSource.filteredData.length === 0){
       this.results = false;
       return true;

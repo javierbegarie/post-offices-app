@@ -18,6 +18,7 @@ export class DeleteConfirmDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DeleteConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
+  /* Clicking outside of the dialog */
   onNoClick(): void {
     this.dialogRef.close();
   }

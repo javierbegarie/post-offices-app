@@ -23,6 +23,9 @@ export class OfficeService {
   }
 
   public updateOffice = (office:Office) => {
+    /* HttpClient sends private attributes (_name) instead of accesors (name).
+       Using payload as an easy fix.
+    */
     let payload = {
       id: office.id,
       name: office.name,

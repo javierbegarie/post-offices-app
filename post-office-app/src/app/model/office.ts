@@ -1,5 +1,11 @@
 class Office{
-    constructor(private _id:string,private _name:string,private _PLZ: number){}
+    constructor(
+        private _id:string,
+        private _name:string,
+        private _PLZ: number)
+    {
+
+    }
 
     get id():string{
         return this._id;

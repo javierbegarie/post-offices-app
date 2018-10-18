@@ -16,6 +16,7 @@ export class OfficeFormComponent implements OnInit {
   officeForm = this._fb.group({
     PLZ: ['', 
       [Validators.required,
+        // Five digits starting with 8 i.e. 84945
       Validators.pattern('^8[0-9]{4}')]
     ],
     name: ['',
@@ -58,20 +59,20 @@ export class OfficeFormComponent implements OnInit {
   }
 
   createOffice(){
-    let office = this.officeForm.value;
-    this._officeService.postOffice(office.PLZ,office.name)
+    let { PLZ, name } = this.officeForm.value;
+    this._officeService.postOffice(PLZ,name)
     .subscribe(()=>{
-      this._snackBar.open(`Office ${office.name} created successfully`, null ,{duration: 1000});
+      this._snackBar.open(`Office ${name} created successfully`, null ,{duration: 1000});
       this.officeForm.reset();
     });
   }
 
   updateOffice(){
-    let value = this.officeForm.value;
-    let office = new Office(this.office.id,value.name,value.PLZ);
+    let { PLZ, name } = this.officeForm.value;
+    let office = new Office( this.office.id, name, PLZ );
     this._officeService.updateOffice(office)
     .subscribe(()=>{
-      this._snackBar.open(`Office ${office.name} updated successfully`, null ,{duration: 1000});
+      this._snackBar.open(`Office ${name} updated successfully`, null ,{duration: 1000});
     });
   }
 }
