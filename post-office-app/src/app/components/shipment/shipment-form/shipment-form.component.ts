@@ -32,6 +32,7 @@ export class ShipmentFormComponent implements OnInit {
     ]
   });
 
+  /* populate selects */
   weights = Object.values(ShipmentWeight);
   types = Object.values(ShipmentType);
   statuses = Object.values(ShipmentStatus);
@@ -50,12 +51,15 @@ export class ShipmentFormComponent implements OnInit {
   ngOnInit() {
     let id = this._route.snapshot.paramMap.get('id');
 
+    let typeControl = this.shipmentForm.get('type');
+    let weightControl = this.shipmentForm.get('weight');
+
     if(id){
       this._shipmentService.getShipment(id).subscribe(shipment=>{
         this.isNew = false;
         this.shipment= <Shipment> shipment;
-        this.shipmentForm.get('type').setValue(this.shipment.type);
-        this.shipmentForm.get('weight').setValue(this.shipment.weight);
+        typeControl.setValue(this.shipment.type);
+        weightControl.setValue(this.shipment.weight);
         this.shipmentForm.get('status').setValue(this.shipment.status);
         this.shipmentForm.get('office').setValue(this.shipment.office.id);
       });
@@ -63,6 +67,16 @@ export class ShipmentFormComponent implements OnInit {
 
     this._officeService.getOffices().subscribe(offices=>{
       this.offices = offices;
+    });
+
+    /* Letter shouldn't weight too much */
+    typeControl.valueChanges.subscribe((newValue)=>{
+      if(newValue === ShipmentType.LETTER){
+        weightControl.setValue(ShipmentWeight.LIGHT);
+        weightControl.disable()
+      } else{
+        weightControl.enable();
+      }
     });
   }
 
