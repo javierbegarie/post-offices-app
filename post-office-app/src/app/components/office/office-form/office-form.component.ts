@@ -58,7 +58,7 @@ export class OfficeFormComponent implements OnInit {
     }
   }
 
-  createOffice(){
+  private createOffice(){
     let { PLZ, name } = this.officeForm.value;
     this._officeService.postOffice(PLZ,name)
     .subscribe(()=>{
@@ -67,7 +67,7 @@ export class OfficeFormComponent implements OnInit {
     });
   }
 
-  updateOffice(){
+  private updateOffice(){
     let { PLZ, name } = this.officeForm.value;
     let office = new Office( this.office.id, name, PLZ );
     this._officeService.updateOffice(office)

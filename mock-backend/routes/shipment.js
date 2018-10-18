@@ -81,7 +81,7 @@ function getType(selection) {
         err.status = 500;
         throw err;
     } else {
-        return type;
+        return type[0];
     }
 }
 

@@ -88,23 +88,24 @@ export class ShipmentFormComponent implements OnInit {
     }
   }
 
-  createShipment(){
-    let shipment = this.shipmentForm.value;
-    let office = this.offices.filter(office=>office.id===shipment.office)[0];
-    this._shipmentService.postShipment(shipment.type,shipment.status,shipment.weight,office)
+  private createShipment(){
+    /* Using Raw Value in case weight control is disabled */
+    let { office ,type ,status ,weight } = this.shipmentForm.getRawValue()
+    office = this.offices.filter(o=>o.id===office)[0];
+    this._shipmentService.postShipment(type,status,weight,office)
     .subscribe(()=>{
       this._snackBar.open(`New shipment created successfully`, null ,{duration: 1000});
       this.shipmentForm.reset();
     });
   }
 
-  updateShipment(){
-    let value = this.shipmentForm.value;
-    let office = this.offices.filter(office=>office.id===value.office)[0];
-    let shipment = new Shipment(this.shipment.id,value.type,value.status,value.weight,'',office);
+  private updateShipment(){
+    let { type, status, weight, office } = this.shipmentForm.getRawValue()
+    office = this.offices.filter(o=>o.id===office)[0];
+    let shipment = new Shipment(this.shipment.id,type,status,weight,'',office);
     this._shipmentService.updateShipment(shipment)
     .subscribe(()=>{
-      this._snackBar.open(`Office ${office.name} updated successfully`, null ,{duration: 1000});
+      this._snackBar.open(`Shipment updated successfully`, null ,{duration: 1000});
     });
   }
 }
