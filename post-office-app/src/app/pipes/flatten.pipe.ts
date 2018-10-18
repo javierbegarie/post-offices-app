@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FlattenPipe implements PipeTransform {
 
-  transform(value: any,skip?:string[]): string {
+  transform(value: any, skip:string[]=[], separator = ' - '): string {
     /**
      *  Show a javascript object as plain string. For example:
      * { name: 'John' , lastName: 'Smith' } | flatten => John - Smith 
@@ -13,11 +13,11 @@ export class FlattenPipe implements PipeTransform {
      */
     let values = [];
     for(let prop in value){
-      if(value.hasOwnProperty(prop) && skip.length && !skip.includes(prop) ){
+      if(value.hasOwnProperty(prop) && !skip.includes(prop) ){
         values.push(value[prop]);
       }
     }
-    return values.join(' - ');
+    return values.join(separator);
   }
 
 }
